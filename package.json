@@ -1,0 +1,7 @@
+{
+  "name": "leaddesk",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Daily lead dashboard (job-board leads) with AI voice calling and call log",
+  "engines": { "node": ">=20" }
+}
