@@ -1,3 +1,8 @@
 {
-  "functions": { "api/[action].js": { "maxDuration": 60 } }
+  "outputDirectory": "public",
+  "functions": {
+    "api/[action].js": {
+      "maxDuration": 60
+    }
+  }
 }
