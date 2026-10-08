@@ -1,0 +1,22 @@
+name: Daily leads
+
+on:
+  schedule:
+    - cron: '30 3 * * *'   # 9:00 AM IST
+  workflow_dispatch:        # lets the dashboard button and the Actions tab start it
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install python-jobspy
+      - run: python scripts/scrape.py
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+          INGEST_SECRET: ${{ secrets.INGEST_SECRET }}
+          RUN_ID: ${{ github.run_id }}
