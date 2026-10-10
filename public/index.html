@@ -261,7 +261,7 @@ document.addEventListener('click',async e=>{
     else if(a==='login'){pw=$('#pw').value;localStorage.setItem('pw',pw);$('#login').style.display='none';await load()}
     else if(a==='logout'){localStorage.removeItem('pw');pw='';location.reload()}
     else if(a==='fetch'){S.busy=true;render();try{await api('fetch-leads',{});toast('Started. New leads will appear here in 5 to 15 minutes.')}finally{S.busy=false}await load()}
-    else if(a==='aicall'){b.disabled=true;await api('call',{leadId:id});toast('Calling now. The recording will appear in Call log when it ends.');await load()}
+    else if(a==='aicall'){b.disabled=true;const lead=S.leads.find(l=>l.id===id);const r=await api('call',{leadId:id});toast('Calling now');S.tab='call';startLive(r.callId,lead&&lead.name||r.name,lead&&lead.phone);await load()}
     else if(a==='csv'){const dsel=dateInfo().sel;const rows=S.leads.filter(l=>l.status==='new'&&(dsel==='all'||istKey(l.createdAt)===dsel));if(!rows.length){toast('No new leads to download for this date');return}
       const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
       const csv=['phone_number,business_name,city,job_title,source,lead_id'].concat(rows.map(l=>[l.phone,l.name,l.city,l.jobTitle,l.source,l.id].map(q).join(','))).join('\n');
